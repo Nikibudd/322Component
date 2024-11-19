@@ -1,4 +1,5 @@
 import TrollVolume from "../components/TrollVolume";
+import Volume from "../components/Volume";
 
 export default function index() {
 
