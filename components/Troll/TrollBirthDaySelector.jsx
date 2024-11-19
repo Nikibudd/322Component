@@ -445,47 +445,84 @@ export default function TrollBirthDaySelector() {
         }
       ]
 
-    return (
+      return (
         <div className="flex flex-col items-center space-y-4 p-4">
-          <h1 className="ml-2 text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">DON'T</h1>
-          <table className="w-full max-w-2xl bg-gray-900 rounded-lg p-4 space-y-4">
-            <tbody>
-              <tr className="bg-gray-800">
-                <td className="p-4 text-lg font-semibold text-gray-300 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">President</td>
-                <td className="p-4 text-lg font-semibold text-gray-300 bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Year</td>
-              </tr>
-              <tr>
-                <td className="p-4">
-                  <select
-                    className="w-full bg-gray-800 text-gray-300 p-2 rounded-lg border border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    onChange={(e) => setSelectedPresidentIndex(e.target.value)}
-                    value={selectedPresidentIndex}
-                  >
-                    <option value={null}>Choose a President...</option>
-                    {presidents.map((president, index) => (
-                      <option value={index}>
-                        {president.name}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td className="p-4"> 
-                  <select
-                    className="w-full bg-gray-800 text-gray-300 p-2 rounded-lg border border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                    value={selectedYear}
-                  >
-                    <option value={null}>Choose a Year...</option>
-                    {presidents[selectedPresidentIndex]?.yearsInOffice.map((year) => (
-                      <option value={year}>
-                        {year}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            <h1 className="ml-2 text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
+                DON'T
+            </h1>
+            <div className="relative flex items-center space-x-4 bg-gray-900 p-4 rounded-lg w-[300px]">
+                {/* Select container */}
+                <div className="flex flex-col w-full space-y-4">
+                    {/* President Select */}
+                    <div className="relative">
+                        <select
+                            className="w-full bg-gray-800 text-gray-300 p-2 rounded-lg border border-gray-700 
+                                     focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent
+                                     appearance-none cursor-pointer transition-colors"
+                            onChange={(e) => {
+                                setSelectedPresidentIndex(e.target.value === "" ? null : Number(e.target.value));
+                                setSelectedYear(null);
+                            }}
+                            value={selectedPresidentIndex ?? ""}
+                        >
+                            <option value="">Choose a President...</option>
+                            {presidents.map((president, index) => (
+                                <option 
+                                    key={president.id} 
+                                    value={index}
+                                    className="bg-gray-800 text-gray-300"
+                                >
+                                    {president.name}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <svg 
+                                className="w-4 h-4 text-gray-400" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    {/* Year Select */}
+                    <div className="relative">
+                        <select
+                            className="w-full bg-gray-800 text-gray-300 p-2 rounded-lg border border-gray-700 
+                                     focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent
+                                     appearance-none cursor-pointer transition-colors
+                                     disabled:opacity-50 disabled:cursor-not-allowed"
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                            value={selectedYear ?? ""}
+                            disabled={!selectedPresidentIndex}
+                        >
+                            <option value="">Choose a Year...</option>
+                            {selectedPresidentIndex !== null && presidents[selectedPresidentIndex]?.yearsInOffice.map((year) => (
+                                <option 
+                                    key={year} 
+                                    value={year}
+                                    className="bg-gray-800 text-gray-300"
+                                >
+                                    {year}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <svg 
+                                className="w-4 h-4 text-gray-400" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
