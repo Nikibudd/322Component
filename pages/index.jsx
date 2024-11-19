@@ -1,7 +1,10 @@
+import TrollVolume from "../components/TrollVolume";
 
 export default function index() {
 
     return (
-        <div>index</div>
+        <div className="flex flex-auto">
+            <TrollVolume/>
+        </div>
     )
 }
