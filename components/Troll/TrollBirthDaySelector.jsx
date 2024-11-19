@@ -468,7 +468,7 @@ export default function TrollBirthDaySelector() {
                             <option value="">Choose a President...</option>
                             {presidents.map((president, index) => (
                                 <option 
-                                    key={president.id} 
+                                    key={index} 
                                     value={index}
                                     className="bg-gray-800 text-gray-300"
                                 >
@@ -497,7 +497,7 @@ export default function TrollBirthDaySelector() {
                                      disabled:opacity-50 disabled:cursor-not-allowed"
                             onChange={(e) => setSelectedYear(e.target.value)}
                             value={selectedYear ?? ""}
-                            disabled={!selectedPresidentIndex}
+                            disabled={selectedPresidentIndex == null}
                         >
                             <option value="">Choose a Year...</option>
                             {selectedPresidentIndex !== null && presidents[selectedPresidentIndex]?.yearsInOffice.map((year) => (
