@@ -1,3 +1,4 @@
+import TrollBirthDaySelector from "../components/Troll/TrollBirthDaySelector";
 import TrollTelephoneNumberSelector from "../components/Troll/TrollTelephoneNumberSelector";
 import TrollVolume from "../components/TrollVolume";
 import Volume from "../components/Volume";
@@ -17,6 +18,7 @@ export default function index() {
                 <TrollTelephoneNumberSelector wantedDigits={3}/>
                 <TrollTelephoneNumberSelector wantedDigits={4}/>
             </div>
+            <TrollBirthDaySelector/>
         </div>
     </>
     
