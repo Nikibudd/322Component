@@ -1,3 +1,4 @@
+import TrollBirthDaySelector from "../components/Troll/TrollBirthDaySelector";
 import TrollTelephoneNumberSelector from "../components/Troll/TrollTelephoneNumberSelector";
 import TrollVolume from "../components/Troll/TrollVolume";
 import Volume from "../components/Normal/Volume";
@@ -40,6 +41,7 @@ export default function index() {
                     </div>
                 </div>
             </div>
+            <TrollBirthDaySelector/>
         </div>
     );
 }
