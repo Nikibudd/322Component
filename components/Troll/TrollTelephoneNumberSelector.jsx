@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
-export default function TrollTelephoneNumberSelector({wantedDigits, hasPlus}) {
+export default function TrollTelephoneNumberSelector({ wantedDigits, hasPlus }) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
     const [scrollPosition, setScrollPosition] = useState(0);
     const dropdownRef = useRef(null);
- 
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -22,7 +22,7 @@ export default function TrollTelephoneNumberSelector({wantedDigits, hasPlus}) {
         const formattedNum = num.toString().padStart(wantedDigits, '0');
         return hasPlus ? `+${formattedNum}` : formattedNum;
     };
- 
+
     const handleScroll = (e) => {
         setScrollPosition(e.target.scrollTop);
     };
@@ -34,57 +34,63 @@ export default function TrollTelephoneNumberSelector({wantedDigits, hasPlus}) {
         }
         return parseInt(wantedNumber);
     };
-     
+
     const visibleNumbers = useMemo(() => {
         const start = Math.max(0, Math.floor(scrollPosition / 30) - 10);
         const end = Math.min(findWantedMaxNumber(wantedDigits), start + 30);
         return Array.from({ length: (end + 1) - start }, (_, i) => start + i + 0);
     }, [scrollPosition]);
- 
+
     return (
-        <div className="relative w-36" ref={dropdownRef}>
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full px-3 py-2 text-left bg-white border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-between items-center"
-            >
-                <span className="font-mono">
-                    {selectedValue ? formatNumber(selectedValue) : formatNumber(findWantedMaxNumber(wantedDigits))}
-                </span>
-                {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-            </button>
- 
-            {isOpen && (
-                <div className="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-10">
-                    <div
-                        className="overflow-y-auto max-h-60"
-                        onScroll={handleScroll}
-                    >
-                        <div className="relative" style={{ height: '300px' }}>
-                            <div style={{ height: `${findWantedMaxNumber(wantedDigits) * 30}px` }} className="absolute w-full">
-                                {visibleNumbers.map((number) => (
-                                    <div
-                                        key={number}
-                                        className={`px-3 py-2 cursor-pointer hover:bg-gray-100 font-mono ${
-                                            selectedValue === number ? 'bg-blue-50 text-blue-600' : ''
-                                        }`}
-                                        onClick={() => {
-                                            setSelectedValue(number);
-                                            setIsOpen(false);
-                                        }}
-                                        style={{
-                                            position: 'absolute',
-                                            top: `${(number - 0) * 30}px`,
-                                            width: '100%'
-                                        }}
-                                    >
-                                        {formatNumber(number)}
-                                    </div>
-                                ))}
+        <>
+            <div className="relative w-64" ref={dropdownRef}>
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-full px-3 py-2 text-left bg-gray-900 rounded-lg focus:outline-none flex justify-between items-center"
+                >
+                    <div className="flex items-center space-x-2">
+                        <span className="font-mono text-gray-200">
+                            {selectedValue ? formatNumber(selectedValue) : formatNumber(findWantedMaxNumber(wantedDigits))}
+                        </span>
+                    </div>
+                    {isOpen ?
+                        <ChevronUp className="w-4 h-4 text-gray-400" /> :
+                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                    }
+                </button>
+
+                {isOpen && (
+                    <div className="absolute w-full mt-1 bg-gray-900 rounded-lg shadow-lg z-10">
+                        <div
+                            className="overflow-y-auto max-h-60"
+                            onScroll={handleScroll}
+                        >
+                            <div className="relative" style={{ height: '300px' }}>
+                                <div style={{ height: `${findWantedMaxNumber(wantedDigits) * 30}px` }} className="absolute w-full">
+                                    {visibleNumbers.map((number) => (
+                                        <div
+                                            key={number}
+                                            className={`px-3 py-2 cursor-pointer font-mono ${selectedValue === number ? 'bg-gray-800 text-purple-400' : 'text-gray-200 hover:bg-gray-800'
+                                                }`}
+                                            onClick={() => {
+                                                setSelectedValue(number);
+                                                setIsOpen(false);
+                                            }}
+                                            style={{
+                                                position: 'absolute',
+                                                top: `${(number - 0) * 30}px`,
+                                                width: '100%'
+                                            }}
+                                        >
+                                            {formatNumber(number)}
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </>
     );
 }
