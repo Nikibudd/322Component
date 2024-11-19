@@ -1,8 +1,10 @@
+import Header from "../components/Header";
+import '../styles/globals.css'
 
 export default function App({Component, pageProps}) {
     return (
         <div>
-            <h1>App</h1>
+            <Header></Header>
             <Component {...pageProps}/>
         </div>
     )
