@@ -1,9 +1,11 @@
 import TrollTelephoneNumberSelector from "../components/Toll/TrollTelephoneNumberSelector";
 import TrollVolume from "../components/TrollVolume";
+import Volume from "../components/Volume";
 
 export default function index() {
 
     return (
+
     
     <>
             <div className="flex flex-auto">
@@ -16,7 +18,10 @@ export default function index() {
         <TrollTelephoneNumberSelector wantedDigits={4}/>
 
     </div>
-
+        <div className="flex flex-auto">
+            <TrollVolume/>
+            <Volume/>
+        </div>
     </>
     
     )
